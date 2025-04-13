@@ -4,6 +4,8 @@ namespace App\Providers;
 ini_set('precision', -1);
 
 use Carbon\Carbon;
+use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
