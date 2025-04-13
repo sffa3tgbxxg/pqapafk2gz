@@ -17,6 +17,7 @@ class AccountResource extends JsonResource
             'amount_btc' => $this->formatValue($this->amount),
             'status' => $this->status,
             'created_at' => Carbon::parse($this->created_at)->isoFormat('D MMMM HH:m'),
+            'expiry_at' => $this->expiry_at,
         ];
     }
 

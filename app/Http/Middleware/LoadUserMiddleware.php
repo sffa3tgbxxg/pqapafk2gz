@@ -17,7 +17,7 @@ class LoadUserMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
+        if (Auth::guard('sanctum')->check()) {
             $userId = Auth::id();
             $user = Cache::remember("user:{$userId}", now()->addMinutes(10), function () use ($userId) {
                 return Auth::user();
