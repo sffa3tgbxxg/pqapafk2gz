@@ -12,10 +12,15 @@ class AccountResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'requisites' => $this->requisites,
-            'amount_rub' => $this->amount_rub,
-            'amount_btc' => $this->formatValue($this->amount),
-            'status' => $this->status,
+            'requisites' => $this->requisites(),
+            'amount' => $this->formatValue($this->amount),
+            'status' => [
+                'name' => $this->status,
+                'code' => $this->statusOrig(),
+            ],
+            'currency' => [
+                'code' => $this->currency->code,
+            ],
             'created_at' => Carbon::parse($this->created_at)->isoFormat('D MMMM HH:m'),
             'expiry_at' => $this->expiry_at,
         ];

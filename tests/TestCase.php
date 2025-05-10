@@ -5,14 +5,16 @@ namespace Tests;
 use App\Models\User;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Testing\TestResponse;
 
 abstract class TestCase extends BaseTestCase
 {
+    use FillData;
+
     public static bool $migrated = false;
     public const POST = "post";
     public const GET = "get";
+    public const PUT = "put";
 
     protected function setUp(): void
     {
@@ -21,7 +23,7 @@ abstract class TestCase extends BaseTestCase
         if (!static::$migrated) {
             Artisan::call('migrate:fresh');
             static::$migrated = true;
-            User::query()->create(['login' => 'admin', 'password' => 'passw0rd']);
+            $this->fillData();
         }
     }
 
@@ -38,7 +40,8 @@ abstract class TestCase extends BaseTestCase
         $token = $user->createToken('test_token')->plainTextToken;
         $method = "{$method}Json";
 
-        return $this->withHeaders(['Authorization' => 'Bearer ' . $token])
+        return $this->withHeaders(['Authorization' => 'Bearer ' . $token, 'Content-Type' => 'application/json'])
             ->$method('/api/' . $url, $data);
     }
+
 }

@@ -1,0 +1,193 @@
+{
+  "resources/font/Roboto.ttf": {
+    "file": "assets/Roboto-3flh3niD.ttf",
+    "src": "resources/font/Roboto.ttf"
+  },
+  "resources/font/Roboto.woff": {
+    "file": "assets/Roboto-DAn5O0Vy.woff",
+    "src": "resources/font/Roboto.woff"
+  },
+  "resources/font/Roboto.woff2": {
+    "file": "assets/Roboto-CriGEldC.woff2",
+    "src": "resources/font/Roboto.woff2"
+  },
+  "resources/font/Robotoblack.ttf": {
+    "file": "assets/Robotoblack-1c9Rnsux.ttf",
+    "src": "resources/font/Robotoblack.ttf"
+  },
+  "resources/font/Robotoblack.woff": {
+    "file": "assets/Robotoblack-C8XKVaFI.woff",
+    "src": "resources/font/Robotoblack.woff"
+  },
+  "resources/font/Robotoblack.woff2": {
+    "file": "assets/Robotoblack-Bfnha7yr.woff2",
+    "src": "resources/font/Robotoblack.woff2"
+  },
+  "resources/font/Robotoblackitalic.ttf": {
+    "file": "assets/Robotoblackitalic-CQGmzPfL.ttf",
+    "src": "resources/font/Robotoblackitalic.ttf"
+  },
+  "resources/font/Robotoblackitalic.woff": {
+    "file": "assets/Robotoblackitalic-DE6tFWNo.woff",
+    "src": "resources/font/Robotoblackitalic.woff"
+  },
+  "resources/font/Robotoblackitalic.woff2": {
+    "file": "assets/Robotoblackitalic-BRNQx8zf.woff2",
+    "src": "resources/font/Robotoblackitalic.woff2"
+  },
+  "resources/font/Robotobold.ttf": {
+    "file": "assets/Robotobold-CsLvpNl7.ttf",
+    "src": "resources/font/Robotobold.ttf"
+  },
+  "resources/font/Robotobold.woff": {
+    "file": "assets/Robotobold-DWhFoj6K.woff",
+    "src": "resources/font/Robotobold.woff"
+  },
+  "resources/font/Robotobold.woff2": {
+    "file": "assets/Robotobold-DZpVwtqM.woff2",
+    "src": "resources/font/Robotobold.woff2"
+  },
+  "resources/font/Robotobolditalic.ttf": {
+    "file": "assets/Robotobolditalic-Hcdj2lPl.ttf",
+    "src": "resources/font/Robotobolditalic.ttf"
+  },
+  "resources/font/Robotobolditalic.woff": {
+    "file": "assets/Robotobolditalic-DWrrJSHo.woff",
+    "src": "resources/font/Robotobolditalic.woff"
+  },
+  "resources/font/Robotobolditalic.woff2": {
+    "file": "assets/Robotobolditalic-DcDOKL6h.woff2",
+    "src": "resources/font/Robotobolditalic.woff2"
+  },
+  "resources/font/Robotoitalic.ttf": {
+    "file": "assets/Robotoitalic-804h-1xE.ttf",
+    "src": "resources/font/Robotoitalic.ttf"
+  },
+  "resources/font/Robotoitalic.woff": {
+    "file": "assets/Robotoitalic-PtJeGtBk.woff",
+    "src": "resources/font/Robotoitalic.woff"
+  },
+  "resources/font/Robotoitalic.woff2": {
+    "file": "assets/Robotoitalic-D3AfrDMu.woff2",
+    "src": "resources/font/Robotoitalic.woff2"
+  },
+  "resources/font/Robotolight.ttf": {
+    "file": "assets/Robotolight-Ch9_GcGR.ttf",
+    "src": "resources/font/Robotolight.ttf"
+  },
+  "resources/font/Robotolight.woff": {
+    "file": "assets/Robotolight-DNPiz_sF.woff",
+    "src": "resources/font/Robotolight.woff"
+  },
+  "resources/font/Robotolight.woff2": {
+    "file": "assets/Robotolight-COkMgh7_.woff2",
+    "src": "resources/font/Robotolight.woff2"
+  },
+  "resources/font/Robotolightitalic.ttf": {
+    "file": "assets/Robotolightitalic-5odn2yBo.ttf",
+    "src": "resources/font/Robotolightitalic.ttf"
+  },
+  "resources/font/Robotolightitalic.woff": {
+    "file": "assets/Robotolightitalic-YYkvaX5x.woff",
+    "src": "resources/font/Robotolightitalic.woff"
+  },
+  "resources/font/Robotolightitalic.woff2": {
+    "file": "assets/Robotolightitalic-BX6tg3wU.woff2",
+    "src": "resources/font/Robotolightitalic.woff2"
+  },
+  "resources/font/Robotomedium.ttf": {
+    "file": "assets/Robotomedium-BRnm1-Es.ttf",
+    "src": "resources/font/Robotomedium.ttf"
+  },
+  "resources/font/Robotomedium.woff": {
+    "file": "assets/Robotomedium-Bz1s5UPQ.woff",
+    "src": "resources/font/Robotomedium.woff"
+  },
+  "resources/font/Robotomedium.woff2": {
+    "file": "assets/Robotomedium-BZHR362f.woff2",
+    "src": "resources/font/Robotomedium.woff2"
+  },
+  "resources/font/Robotomediumitalic.ttf": {
+    "file": "assets/Robotomediumitalic-hKcRJz_Z.ttf",
+    "src": "resources/font/Robotomediumitalic.ttf"
+  },
+  "resources/font/Robotomediumitalic.woff": {
+    "file": "assets/Robotomediumitalic-BDxRwkYA.woff",
+    "src": "resources/font/Robotomediumitalic.woff"
+  },
+  "resources/font/Robotomediumitalic.woff2": {
+    "file": "assets/Robotomediumitalic-drhUp4SC.woff2",
+    "src": "resources/font/Robotomediumitalic.woff2"
+  },
+  "resources/font/Robotothin.ttf": {
+    "file": "assets/Robotothin-BSGQRxfH.ttf",
+    "src": "resources/font/Robotothin.ttf"
+  },
+  "resources/font/Robotothin.woff": {
+    "file": "assets/Robotothin-BQipO2oA.woff",
+    "src": "resources/font/Robotothin.woff"
+  },
+  "resources/font/Robotothin.woff2": {
+    "file": "assets/Robotothin-BHgCkRFG.woff2",
+    "src": "resources/font/Robotothin.woff2"
+  },
+  "resources/font/Robotothinitalic.ttf": {
+    "file": "assets/Robotothinitalic-C_ynyJky.ttf",
+    "src": "resources/font/Robotothinitalic.ttf"
+  },
+  "resources/font/Robotothinitalic.woff": {
+    "file": "assets/Robotothinitalic-D5pdFWI-.woff",
+    "src": "resources/font/Robotothinitalic.woff"
+  },
+  "resources/font/Robotothinitalic.woff2": {
+    "file": "assets/Robotothinitalic-Vqi56rWG.woff2",
+    "src": "resources/font/Robotothinitalic.woff2"
+  },
+  "resources/js/app.js": {
+    "file": "assets/app-tywVLMy4.js",
+    "name": "app",
+    "src": "resources/js/app.js",
+    "isEntry": true,
+    "css": [
+      "assets/app-C2IkJH6j.css"
+    ],
+    "assets": [
+      "assets/Robotothin-BHgCkRFG.woff2",
+      "assets/Robotothin-BQipO2oA.woff",
+      "assets/Robotothin-BSGQRxfH.ttf",
+      "assets/Robotothinitalic-Vqi56rWG.woff2",
+      "assets/Robotothinitalic-D5pdFWI-.woff",
+      "assets/Robotothinitalic-C_ynyJky.ttf",
+      "assets/Robotolight-COkMgh7_.woff2",
+      "assets/Robotolight-DNPiz_sF.woff",
+      "assets/Robotolight-Ch9_GcGR.ttf",
+      "assets/Robotolightitalic-BX6tg3wU.woff2",
+      "assets/Robotolightitalic-YYkvaX5x.woff",
+      "assets/Robotolightitalic-5odn2yBo.ttf",
+      "assets/Roboto-CriGEldC.woff2",
+      "assets/Roboto-DAn5O0Vy.woff",
+      "assets/Roboto-3flh3niD.ttf",
+      "assets/Robotoitalic-D3AfrDMu.woff2",
+      "assets/Robotoitalic-PtJeGtBk.woff",
+      "assets/Robotoitalic-804h-1xE.ttf",
+      "assets/Robotomedium-BZHR362f.woff2",
+      "assets/Robotomedium-Bz1s5UPQ.woff",
+      "assets/Robotomedium-BRnm1-Es.ttf",
+      "assets/Robotomediumitalic-drhUp4SC.woff2",
+      "assets/Robotomediumitalic-BDxRwkYA.woff",
+      "assets/Robotomediumitalic-hKcRJz_Z.ttf",
+      "assets/Robotobold-DZpVwtqM.woff2",
+      "assets/Robotobold-DWhFoj6K.woff",
+      "assets/Robotobold-CsLvpNl7.ttf",
+      "assets/Robotobolditalic-DcDOKL6h.woff2",
+      "assets/Robotobolditalic-DWrrJSHo.woff",
+      "assets/Robotobolditalic-Hcdj2lPl.ttf",
+      "assets/Robotoblack-Bfnha7yr.woff2",
+      "assets/Robotoblack-C8XKVaFI.woff",
+      "assets/Robotoblack-1c9Rnsux.ttf",
+      "assets/Robotoblackitalic-BRNQx8zf.woff2",
+      "assets/Robotoblackitalic-DE6tFWNo.woff",
+      "assets/Robotoblackitalic-CQGmzPfL.ttf"
+    ]
+  }
+}

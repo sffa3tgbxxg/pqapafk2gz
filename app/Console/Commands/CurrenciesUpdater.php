@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\Currency\CurrencyService;
+use App\Services\Logger;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -34,12 +35,10 @@ class CurrenciesUpdater extends Command
             });
 
         } catch (\Throwable $e) {
-            Log::error("Не удалось обновить курс валют",
-                [
+            Logger::error("Не удалось обновить курс валют. Error: " . json_encode([
                     'message' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
-                ]
-            );
+                ]));
         }
     }
 }

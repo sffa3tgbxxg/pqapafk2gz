@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Employee extends Model
 {
     protected $table = 'employees';
+    protected $fillable = [
+        'service_id', 'user_id', 'role_id', 'contacts', 'comment'
+    ];
 
     public function role(): BelongsTo
     {

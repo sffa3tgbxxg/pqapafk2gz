@@ -14,6 +14,8 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
+    // Команда для вызова python скриптов
+    'python_exec' => env('PYTHON_EXEC', 'python3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,7 +41,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -123,4 +125,8 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'aliases' => \Illuminate\Support\Facades\Facade::defaultAliases()->merge([
+        'RabbitMQ' => \App\Facades\RabbitMQ::class,
+        'InvoiceFacade' => \App\Facades\InvoiceFacade::class,
+    ])->toArray(),
 ];

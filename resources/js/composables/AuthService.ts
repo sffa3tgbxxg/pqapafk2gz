@@ -1,32 +1,25 @@
-import { ref } from 'vue'
 import axios from 'axios'
-import { useNotification } from '@/stores/notification.js'
-import { useUserStore } from '@/stores/user.js'
-import { useRouter } from 'vue-router'
+import { useNotification } from '../store/Notification'
 
-export function authService() {
-  const userStore = useUserStore();
-  const router = useRouter()
-  const notificationStore = useNotification()
-  const isLoading = ref(false)
-  const auth = async (form: object, action: string) => {
-    if (isLoading.value) return
-    isLoading.value = true
+export function useAuth() {
+  const notification = useNotification()
 
+  const form = {
+    login: '',
+    password: '',
+  }
+
+  const login = async () => {
     try {
-      const response = await axios.post(`/api/auth/${action}`, form)
-      localStorage.setItem('auth-token', response.data.token);
-      // await useUserStore.setUser(response.data.);
-      await router.push({ name: 'dashboard' })
+      const response = await axios.post('/api/auth/login', form)
+      localStorage.setItem('token',response.data.token);
     } catch (error) {
-      await notificationStore.showNotification(error.response.data.message)
-    } finally {
-      isLoading.value = false
+      notification.showNotification(error.response.data.message)
     }
   }
 
   return {
-    isLoading,
-    auth,
+    form,
+    login,
   }
 }

@@ -12,7 +12,7 @@ class AuthTest extends TestCase
     public function test_registration_user(): void
     {
         $response = $this->post("/api/auth/register", [
-            'login' => 'adminTest',
+            'login' => 'adminTest1',
             'password' => 'passw0rd',
             'password_confirmation' => 'passw0rd',
         ]);
@@ -26,7 +26,7 @@ class AuthTest extends TestCase
     public function test_login_user(): void
     {
         $response = $this->post('/api/auth/login', [
-            'login' => 'adminTest',
+            'login' => 'adminTest1',
             'password' => 'passw0rd',
         ]);
         $response->assertStatus(200);

@@ -11,3 +11,14 @@ Schedule::command('app:currencies-updater')
     ->everyThreeMinutes()
     ->runInBackground()
     ->withoutOverlapping();
+
+Schedule::command('app:fill-balance-services')
+    ->everyTenMinutes()
+    ->runInBackground()
+    ->withoutOverlapping();
+
+
+Schedule::command('app:account-invoices-check-payment')
+    ->everyThreeMinutes()
+    ->runInBackground()
+    ->withoutOverlapping();

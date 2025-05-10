@@ -41,6 +41,16 @@ return [
             'journal_mode' => null,
             'synchronous' => null,
         ],
+        'clickhouse' => [
+            'clickhouse' => [
+                'driver' => 'clickhouse',
+                'host' => env('CLICKHOUSE_HOST', 'localhost'),
+                'port' => env('CLICKHOUSE_PORT', '8123'),
+                'database' => env('CLICKHOUSE_DATABASE', 'analytics'),
+                'username' => env('CLICKHOUSE_USERNAME', 'default'),
+                'password' => env('CLICKHOUSE_PASSWORD', '12345678'),
+            ],
+        ],
 
         'mysql' => [
             'driver' => 'mysql',
@@ -147,7 +157,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 

@@ -1,40 +1,40 @@
-import axios from 'axios';
-window.axios = axios;
+import axios from 'axios'
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-// window.axios.defaults.withCredentials = true;
-axios.defaults.withXSRFToken = true;
+window.axios = axios
 
-const apiBaseUrl = import.meta.env.VITE_APP_URL || 'http://127.0.0.1:8000/api';
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest'
+
+const apiBaseUrl = import.meta.env.VITE_APP_URL || 'http://localhost:8000/api'
 
 const instance = axios.create({
   baseURL: apiBaseUrl,
   headers: {
     'Content-Type': 'application/json',
   },
-});
+})
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth-token');
+    const token = localStorage.getItem('token')
     if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
+      config.headers['Authorization'] = `Bearer ${token}`
     }
-    return config;
+    return config
   },
   (error) => {
-    return Promise.reject(error);
-  }
-);
+    return Promise.reject(error)
+  },
+)
 
 instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      // window.location.href = '/login';
+      window.location.href = '/auth'
+      localStorage.removeItem('token')
     }
-    return Promise.reject(error);
-  }
-);
+    return Promise.reject(error)
+  },
+)
 
-export default instance;
+export default instance

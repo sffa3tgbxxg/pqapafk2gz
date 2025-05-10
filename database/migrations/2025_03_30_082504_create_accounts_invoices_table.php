@@ -13,14 +13,17 @@ return new class extends Migration {
         Schema::create('accounts_invoices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->decimal('amount_rub',19, 8);
             $table->decimal('amount', 19, 8);
-            $table->text('requisites');
+            $table->float('ex_rate');
+            $table->unsignedBigInteger('currency_id');
+            $table->unsignedBigInteger("address_id");
             $table->enum('status', ['pending', 'canceled', 'paid'])->default('pending');
             $table->timestamp('expiry_at');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('currency_id')->references('id')->on('currencies');
+            $table->foreign('address_id')->references('id')->on('crypto_addresses');
         });
     }
 

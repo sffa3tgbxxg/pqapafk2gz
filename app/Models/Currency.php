@@ -13,5 +13,13 @@ class Currency extends Model
         'symbol',
     ];
 
+    const RUBLES = 'RUB';
+    const BTC = 'BITCOIN';
+
     public $timestamps = true;
+
+    public static function getIdByCode($code): ?int
+    {
+        return self::query()->where('code', $code)?->first()?->id;
+    }
 }

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Services\AccountService;
+use App\Services\Logger;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -34,12 +35,10 @@ class AccountInvoice extends Command
             });
 
         } catch (\Throwable $e) {
-            Log::error("Не удалось обновить счета по подписке в кроне",
-                [
+            Logger::error("Не удалось отменить счета по подписке в кроне. Error: " . json_encode([
                     'message' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
-                ]
-            );
+                ]));
         }
     }
 }

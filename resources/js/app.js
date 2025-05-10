@@ -1,24 +1,45 @@
-import '../css/main.css' // Если у тебя есть стили, оставь
 import { createApp } from 'vue'
+import App from '@/views/App.vue'
+import './bootstrap'
+import VueDatePicker from '@vuepic/vue-datepicker'
+import '@vuepic/vue-datepicker/dist/main.css'
+import ru from 'date-fns/locale/ru'
+
+import router from '@/router/index.js'
 import { createPinia } from 'pinia'
-import App from './App.vue' // Укажи корневой компонент
-import router from './router/index.js' // Подключи маршруты Vue Router
-import '@/bootstrap.js'
-import { useUserStore } from '@/stores/user.js'
+import { useMenuStore } from './store/Menu'
+import { useNotification } from '@/store/Notification.js'
 
-const pinia = createPinia()
 const app = createApp(App)
-
+const pinia = createPinia()
 app.use(pinia)
+
 app.use(router)
 
-const userStore = useUserStore()
+const menuStore = useMenuStore()
 
-userStore.fetchUser()
-setInterval(() => {
-  if (userStore.authToken !== null) {
-    userStore.fetchUser()
-  }
-}, 10000)
+if (localStorage.getItem('token') != null) {
+  menuStore.loadMenu()
+}
 
+app.mixin({
+  methods: {
+    copyText(text) {
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      document.body.appendChild(textarea)
+      textarea.select()
+      document.execCommand('copy')
+      document.body.removeChild(textarea)
+      useNotification().showNotification('Текст скопирован', 'success')
+    },
+  },
+})
+
+app.component('VueDatePicker', VueDatePicker)
+app.provide('VueDatePickerConfig', {
+  locale: ru,
+  cancelText: 'Отмена',
+  selectText: 'Выбрать',
+})
 app.mount('#app')

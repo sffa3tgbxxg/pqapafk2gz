@@ -14,9 +14,13 @@ return new class extends Migration {
             $table->id();
             $table->string("name");
             $table->float("fee");
+            $table->float('min_amount')->default(0);
+            $table->float('max_amount')->default(9999999);
             $table->boolean('auto_withdraw')->default(false);
             $table->float('min_withdraw');
-            $table->text('url');
+            $table->text('endpoint');
+            $table->text('image')->nullable();
+            $table->boolean('active')->default(false);
             $table->timestamps();
         });
     }

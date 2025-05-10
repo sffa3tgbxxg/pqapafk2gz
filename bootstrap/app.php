@@ -18,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->api()->append(LoadUserMiddleware::class);
+
+        $middleware->alias([
+            'service-subscribe' => \App\Http\Middleware\ServiceSubscribeMiddleware::class,
+            'service-access' => \App\Http\Middleware\ServiceAccessMiddleware::class,
+            'access-invoice-user' => \App\Http\Middleware\AccessInvoiceUserMiddleware::class,
+            'is-admin-user' => \App\Http\Middleware\IsAdminMiddleware::class,
+            'admin-or-subscribe-or-role-in-service' => \App\Http\Middleware\SubscriptionOrRoleInServiceMiddleware::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

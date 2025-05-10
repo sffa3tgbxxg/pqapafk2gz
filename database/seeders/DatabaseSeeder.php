@@ -4,7 +4,11 @@ namespace Database\Seeders;
 
 use App\Models\Currency;
 use App\Models\CurrencyPrice;
+use App\Models\EmployeePanel;
+use App\Models\Exchanger;
+use App\Models\PriceSubscription;
 use App\Models\Role;
+use App\Models\Subscriber;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -26,6 +30,28 @@ class DatabaseSeeder extends Seeder
         DB::statement("ALTER TABLE currency_prices AUTO_INCREMENT = 0;");
 
         DB::statement("ALTER TABLE roles AUTO_INCREMENT = 0;");
+
+        User::query()->create(
+            ['login' => 'admin', 'password' => '12345678']
+        );
+
+        User::query()->create(
+            ['login' => 'admin_service', 'password' => '12345678']
+        );
+
+        User::query()->create(
+            ['login' => 'operator_service', 'password' => '12345678']
+        );
+
+        User::query()->create(
+            ['login' => 'operator_service_2', 'password' => '12345678']
+        );
+
+
+        Subscriber::query()
+            ->create(
+                ['user_id' => 1, 'expiry_at' => now()->addMonths(1)]
+            );
 
         Currency::query()
             ->insert(
@@ -53,6 +79,39 @@ class DatabaseSeeder extends Seeder
                     ['id' => 4, 'name' => 'operator_service'],
                 ]
             );
+
+        EmployeePanel::query()->create(
+            ['user_id' => 1, 'role_id' => 1]
+        );
+
+
+        Exchanger::query()
+            ->create(
+                [
+                    'name' => 'Обмен быстро',
+                    'fee' => 18,
+                    'auto_withdraw' => true,
+                    'min_withdraw' => 10000,
+                    'endpoint' => 'http://obmenbistro.ru',
+                    'image' => null,
+                    'active' => true
+                ]
+            );
+
+        Exchanger::query()
+            ->create(
+                [
+                    'name' => 'Обмен медленно',
+                    'fee' => 10,
+                    'auto_withdraw' => true,
+                    'min_withdraw' => 5000,
+                    'endpoint' => 'http://obmenslow.ru',
+                    'image' => null,
+                    'active' => true,
+                ]
+            );
+
+        PriceSubscription::query()->create(['price_rub' => 30000]);
 
     }
 }

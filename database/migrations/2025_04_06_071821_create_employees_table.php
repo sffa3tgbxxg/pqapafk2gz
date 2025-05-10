@@ -15,10 +15,15 @@ return new class extends Migration {
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('service_id');
             $table->unsignedTinyInteger('role_id');
+            $table->text('contacts')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+
+            $table->unique(['service_id', 'user_id']);
         });
     }
 

@@ -12,7 +12,9 @@ class ServiceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'role' => $this->role($request->attributes->get('auth_user')?->id),
+            'role' => $this->role($request->attributes->get('auth_user')?->id)?->name,
+            'active' => (bool)$this->active,
+            'status' => $this->active ? 'Работает' : 'Отключено',
         ];
     }
 
