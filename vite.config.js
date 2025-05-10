@@ -18,7 +18,6 @@ export default defineConfig({
       refresh: true,
     }),
     vue(),
-    vueDevTools(),
     tailwindcss(),
   ],
   resolve: {
