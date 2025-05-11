@@ -13,6 +13,7 @@ export function useServiceExchangers() {
     service_id: null,
     exchanger_id: null,
     api_key: null,
+    fee: null,
     secret_key: null,
   })
 

@@ -65,6 +65,7 @@ export default defineComponent({
         <tr>
           <th>ID</th>
           <th>Название</th>
+          <th>API Ключ</th>
           <th>Состояние</th>
           <th>Действия</th>
         </tr>
@@ -74,6 +75,7 @@ export default defineComponent({
           <tr>
             <td>{{ service.id }}</td>
             <td>{{ service.name }}</td>
+            <td>{{ service.api_key }}</td>
             <td>{{ service.status }}</td>
             <td>
               <div class="zkl2n1">

@@ -41,7 +41,7 @@ class InvoicesQuery
             })
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
-            ->paginate(50);
+            ->paginate(20);
     }
 
     /**

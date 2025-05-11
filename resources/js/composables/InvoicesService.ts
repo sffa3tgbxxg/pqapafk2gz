@@ -20,6 +20,7 @@ export function useInvoices() {
     service_id: null,
     exchanger_id: null,
     user: null,
+    page: 1,
   })
 
   const notification = useNotification()

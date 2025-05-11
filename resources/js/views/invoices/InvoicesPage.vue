@@ -1,22 +1,22 @@
 <script lang="ts">
-import { defineComponent, onMounted, Ref, ref } from 'vue'
-import UserTemplate from '@/views/UserTemplate.vue'
-import HeaderPage from '@/components/HeaderPage.vue'
-import FiltersComponent from '@/components/FiltersComponent.vue'
-import InputComponent from '@/components/InputComponent.vue'
-import { PencilIcon } from '@heroicons/vue/24/outline'
-import PaginationComponent from '@/components/PaginationComponent.vue'
-import ModalComponent from '@/components/ModalComponent.vue'
-import { TrashIcon } from '@heroicons/vue/16/solid'
-import { useInvoices } from '@/composables/InvoicesService'
-import DatePicker from '@/components/DatePicker.vue'
-import InputSearchComponent from '@/components/InputSearchComponent.vue'
-import { useServices } from '@/composables/Services'
-import IconInBox from '@/components/IconInBox.vue'
-import TextAreaComponent from '@/components/TextAreaComponent.vue'
+import { defineComponent, onMounted, Ref, ref } from "vue";
+import UserTemplate from "@/views/UserTemplate.vue";
+import HeaderPage from "@/components/HeaderPage.vue";
+import FiltersComponent from "@/components/FiltersComponent.vue";
+import InputComponent from "@/components/InputComponent.vue";
+import { PencilIcon } from "@heroicons/vue/24/outline";
+import PaginationComponent from "@/components/PaginationComponent.vue";
+import ModalComponent from "@/components/ModalComponent.vue";
+import { TrashIcon } from "@heroicons/vue/16/solid";
+import { useInvoices } from "@/composables/InvoicesService";
+import DatePicker from "@/components/DatePicker.vue";
+import InputSearchComponent from "@/components/InputSearchComponent.vue";
+import { useServices } from "@/composables/Services";
+import IconInBox from "@/components/IconInBox.vue";
+import TextAreaComponent from "@/components/TextAreaComponent.vue";
 
 export default defineComponent({
-  name: 'EmployeesPage',
+  name: "EmployeesPage",
   methods: { TrashIcon, PencilIcon },
   components: {
     TextAreaComponent,
@@ -31,21 +31,29 @@ export default defineComponent({
     UserTemplate,
   },
   setup() {
-    const invoices = ref(null)
-    const services = ref(null)
-    const settings = useInvoices()
+    const invoices = ref(null);
+    const services = ref(null);
+    const settings = useInvoices();
+    const invoicesData = ref(null);
 
     onMounted(async () => {
-      services.value = (await useServices().getServices(false)).data
-    })
+      services.value = (await useServices().getServices(false)).data;
+    });
+
+    const search = async () => {
+      invoicesData.value = await settings.getInvoices();
+      invoices.value = invoicesData.value.data;
+    };
 
     return {
       ...settings,
       invoices,
+      invoicesData,
       services,
-    }
+      search,
+    };
   },
-})
+});
 </script>
 
 <template>
@@ -70,9 +78,7 @@ export default defineComponent({
         <InputComponent v-model="formSearch.user" placeholder="ID или Никнейм пользователя" />
       </div>
       <div class="lg3n">
-        <button @click="async () => (invoices = await getInvoices())" class="btn btn-blue">
-          Поиск
-        </button>
+        <button @click="search" class="btn btn-blue">Поиск</button>
       </div>
     </FiltersComponent>
     <div style="max-width: 100%; background: transparent; height: 8px"></div>
@@ -92,7 +98,7 @@ export default defineComponent({
         </tr>
       </thead>
       <tbody>
-        <template v-for="invoice in invoices?.data" :key="invoice.id">
+        <template v-for="invoice in invoices" :key="invoice.id">
           <tr>
             <td>{{ invoice.id }}</td>
             <td>{{ invoice.time.created_at_format }}</td>
@@ -101,7 +107,7 @@ export default defineComponent({
             <td>{{ invoice.payment_method?.name }}</td>
             <td>{{ invoice.status.name }}</td>
             <td>{{ invoice.user.nickname }}</td>
-            <td >
+            <td>
               <div class="zk3n1x">
                 <div class="zk3nz0">
                   <span class="zk3nz">С комиссией:</span>
@@ -140,7 +146,19 @@ export default defineComponent({
       </tbody>
     </table>
     <div class="mw-100" style="height: 24px"></div>
-    <PaginationComponent last-page="1" />
+
+    <PaginationComponent
+      v-if="(invoicesData?.meta?.last_page ?? 1) > 1"
+      :lastPage="invoicesData?.meta?.last_page ?? 1"
+      :currentPage="invoicesData?.meta?.current_page ?? 1"
+      @handle="
+        (val) => {
+          formSearch.page = val;
+          search();
+        }
+      "
+    />
+
     <ModalComponent
       v-if="showCancelModal"
       @close="((showCancelModal = !showCancelModal), (commentForm.comment = null))"
@@ -203,5 +221,5 @@ export default defineComponent({
 </template>
 
 <style scoped lang="scss">
-@use '../../../css/pages/services';
+@use "../../../css/pages/services";
 </style>
