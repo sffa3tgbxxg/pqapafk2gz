@@ -36,9 +36,4 @@ app.mixin({
 })
 
 app.component('VueDatePicker', VueDatePicker)
-app.provide('VueDatePickerConfig', {
-  locale: ru,
-  cancelText: 'Отмена',
-  selectText: 'Выбрать',
-})
 app.mount('#app')
