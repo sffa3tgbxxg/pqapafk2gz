@@ -11,6 +11,7 @@ class PriceSubscription extends Model
     protected $fillable = [
         'price_rub',
     ];
+    public $timestamps = false;
 
     public static function getPrice(): float
     {
