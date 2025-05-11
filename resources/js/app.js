@@ -8,7 +8,6 @@ import router from "@/router/index.js";
 import { createPinia } from "pinia";
 import { useMenuStore } from "./store/Menu";
 import { useNotification } from "@/store/Notification.js";
-import { useRoute } from "vue-router";
 
 const app = createApp(App);
 const pinia = createPinia();
@@ -20,11 +19,6 @@ const menuStore = useMenuStore();
 
 if (localStorage.getItem("token") != null) {
   menuStore.loadMenu();
-} else {
-  const route = useRoute();
-  if (route.name !== "Auth") {
-    location.href = "/auth";
-  }
 }
 
 app.mixin({

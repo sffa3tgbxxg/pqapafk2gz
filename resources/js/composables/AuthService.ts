@@ -1,25 +1,27 @@
-import axios from 'axios'
-import { useNotification } from '../store/Notification'
+import axios from "axios";
+import { useNotification } from "../store/Notification";
+import { useAuthStore } from "../store/AuthStore";
 
 export function useAuth() {
-  const notification = useNotification()
+  const notification = useNotification();
+  const authStore = useAuthStore();
 
   const form = {
-    login: '',
-    password: '',
-  }
+    login: "",
+    password: "",
+  };
 
   const login = async () => {
     try {
-      const response = await axios.post('/api/auth/login', form)
-      localStorage.setItem('token',response.data.token);
+      await authStore.login(form);
+      router.push("/");
     } catch (error) {
-      notification.showNotification(error.response.data.message)
+      notification.showNotification(error.response.data.message);
     }
-  }
+  };
 
   return {
     form,
     login,
-  }
+  };
 }
