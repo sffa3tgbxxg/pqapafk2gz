@@ -14,12 +14,10 @@ use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Random\RandomException;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
         Currency::query()->delete();
@@ -88,26 +86,41 @@ class DatabaseSeeder extends Seeder
         Exchanger::query()
             ->create(
                 [
-                    'name' => 'Обмен быстро',
+                    'name' => 'Тестовый обменник',
                     'fee' => 18,
                     'auto_withdraw' => true,
                     'min_withdraw' => 10000,
-                    'endpoint' => 'http://obmenbistro.ru',
+                    'endpoint' => 'http://testendpoint.ru',
                     'image' => null,
                     'active' => true
                 ]
             );
 
         Exchanger::query()
-            ->create(
+            ->insert(
                 [
-                    'name' => 'Обмен медленно',
-                    'fee' => 10,
-                    'auto_withdraw' => true,
-                    'min_withdraw' => 5000,
-                    'endpoint' => 'http://obmenslow.ru',
-                    'image' => null,
-                    'active' => true,
+                    [
+                        'name' => 'Greengo',
+                        'fee' => 12,
+                        'auto_withdraw' => false,
+                        'min_withdraw' => 0,
+                        'min_amount' => 1000,
+                        'max_amount' => 99999999,
+                        'endpoint' => 'https://api.greengo.cc',
+                        'image' => null,
+                        'active' => true,
+                    ],
+                    [
+                        'name' => 'Greengo',
+                        'fee' => 15,
+                        'min_amount' => 1000,
+                        'max_amount' => 99999999,
+                        'auto_withdraw' => true,
+                        'min_withdraw' => 2000,
+                        'endpoint' => 'https://luckypay.io',
+                        'image' => null,
+                        'active' => true,
+                    ]
                 ]
             );
 

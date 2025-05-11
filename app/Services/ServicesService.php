@@ -28,7 +28,7 @@ class ServicesService
             })
             ->with('exchangers');
 
-        return $limit ? $services->paginate(20) : $services->get();
+        return $limit ? $services->paginate(300) : $services->get();
     }
 
     public function create(array $data): Service

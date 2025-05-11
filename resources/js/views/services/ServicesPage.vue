@@ -85,8 +85,6 @@ export default defineComponent({
         </template>
       </tbody>
     </table>
-    <div class="mw-100" style="height: 18px"></div>
-    <PaginationComponent last-page="1" />
 
     <ModalComponent
       v-if="showCreateService"
