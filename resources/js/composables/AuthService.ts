@@ -1,11 +1,10 @@
 import axios from "axios";
 import { useNotification } from "../store/Notification";
-import { useAuthStore } from "../store/AuthStore";
+import { useRouter } from "vue-router";
 
 export function useAuth() {
   const notification = useNotification();
-  const authStore = useAuthStore();
-
+  const router = useRouter();
   const form = {
     login: "",
     password: "",
@@ -13,10 +12,15 @@ export function useAuth() {
 
   const login = async () => {
     try {
-      await authStore.login(form);
-      router.push("/");
+      const response = await axios.post("/api/auth/login", form);
+      localStorage.setItem("token", response.data.token);
+      await router.push({ name: "Home" });
+      location.reload();
     } catch (error) {
-      notification.showNotification(error.response.data.message);
+      console.error(error);
+      if (error.response?.data) {
+        notification.showNotification(error.response?.data?.message);
+      }
     }
   };
 

@@ -8,7 +8,6 @@ import InvoicesPage from "@/views/invoices/InvoicesPage.vue";
 import ExchangersPage from "@/views/exchangers/ExchangersPage.vue";
 import SubscriptionPage from "@/views/subscriptions/SubscriptionPage.vue";
 import WithdrawsPage from "@/views/withdraws/WithdrawsPage.vue";
-import { useAuthStore } from "@/store/AuthStore.js";
 
 const routes = [
   { path: "/auth", component: LoginPage, name: "Auth", meta: { requiresAuth: false } },
@@ -53,9 +52,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const authStore = useAuthStore();
-
-  if (to.meta.requiresAuth && !authStore.isAuthenticated) {
+  if (to.meta.requiresAuth && localStorage.getItem("token")) {
     next({ name: "Auth", query: { redirect: to.fullPath } });
   } else {
     next();
