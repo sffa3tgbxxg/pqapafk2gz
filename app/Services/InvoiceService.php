@@ -176,7 +176,7 @@ class InvoiceService
                 'name' => $serviceExchanger->exchanger->name,
                 'amount' => $this->constructAmountWithFee($serviceExchanger, $invoice->amount_out),
                 'api_key' => $serviceExchanger->api_key,
-                'secret_key' => $serviceExchanger->secret_key,
+                'secret_key' => $serviceExchanger->secret_key ?? "",
             ];
         }
 
