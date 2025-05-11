@@ -16,7 +16,7 @@ return new class extends AbstractClickhouseMigration {
                 request_duration_ms Float64,
                 amount Decimal(19, 8),
                 record_date Date,
-                time DateTime,
+                time DateTime
             ) ENGINE = MergeTree()
             ORDER BY (record_date, exchanger_id, invoice_id, status)
             SQL
