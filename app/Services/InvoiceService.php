@@ -141,7 +141,7 @@ class InvoiceService
                 'amount_out' => $data['amount'],
                 'amount_in' => 0,
                 'user_id' => $user?->id ?? null,
-                'expiry_at' => Carbon::now()->addHour(),
+                'expiry_at' => null,
                 'currency_id' => Currency::getIdByCode(Currency::RUBLES)
             ]);
 
