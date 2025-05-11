@@ -3,7 +3,6 @@ import App from '@/views/App.vue'
 import './bootstrap'
 import VueDatePicker from '@vuepic/vue-datepicker'
 import '@vuepic/vue-datepicker/dist/main.css'
-import ru from 'date-fns/locale/ru'
 
 import router from '@/router/index.js'
 import { createPinia } from 'pinia'

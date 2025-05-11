@@ -1,15 +1,10 @@
+import { defineConfig } from "vite";
+import laravel from "laravel-vite-plugin";
+import vue from "@vitejs/plugin-vue";
 import { fileURLToPath, URL } from "node:url";
 
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import laravel from "laravel-vite-plugin";
-
-// https://vite.dev/config/
 export default defineConfig({
-  server: {
-    port: 3001,
-    host: "127.0.0.1",
-  },
+  server: { port: 3001, host: "127.0.0.1" },
   plugins: [
     vue(),
     laravel({
