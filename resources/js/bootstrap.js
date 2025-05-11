@@ -1,10 +1,14 @@
 import axios from "axios";
+import { useAuthStore } from "@/store/AuthStore.js";
+import { useRouter } from "vue-router";
 
 window.axios = axios;
 
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 
 const apiBaseUrl = import.meta.env.VITE_APP_URL || "http://localhost:8000/api";
+
+const authStore = useAuthStore();
 
 const instance = axios.create({
   baseURL: apiBaseUrl,
@@ -15,8 +19,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
-    if (token) {
+    const token = authStore.token;
+    if (token && authStore.isAuthenticated) {
       config.headers["Authorization"] = `Bearer ${token}`;
     }
     return config;
@@ -30,9 +34,8 @@ instance.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      window.location.href = "/auth";
+      authStore.logout();
+      useRouter().push({ name: "Auth" });
     }
     return Promise.reject(error);
   },
