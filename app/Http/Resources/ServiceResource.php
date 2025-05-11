@@ -12,6 +12,7 @@ class ServiceResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'api_key' => $this->api_key,
             'role' => $this->role($request->attributes->get('auth_user')?->id)?->name,
             'active' => (bool)$this->active,
             'status' => $this->active ? 'Работает' : 'Отключено',

@@ -31,6 +31,7 @@ class ServiceExchangerService
                 'service_id' => $data['service_id'],
                 'exchanger_id' => $data['exchanger_id'],
                 'api_key' => $data['api_key'],
+                'fee' => $data['fee'],
                 'active' => true,
             ]);
         });

@@ -156,7 +156,7 @@ export default defineComponent({
         </template>
       </InputSearchComponent>
 
-      <InputComponent style="margin-top: 20px" v-model="formCreate.fee" placeholder="Ваша комиссия" />
+      <InputComponent style="margin-top: 20px" v-model="formCreate.fee" placeholder="Ваша комиссия*" />
 
       <InputComponent
         style="margin-top: 20px"
