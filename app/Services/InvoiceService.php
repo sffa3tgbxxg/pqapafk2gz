@@ -10,6 +10,7 @@ use App\Models\Service;
 use App\Models\ServiceExchanger;
 use App\Models\UserService;
 use App\Services\Methods\PaymentMethodContract;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -140,6 +141,7 @@ class InvoiceService
                 'amount_out' => $data['amount'],
                 'amount_in' => 0,
                 'user_id' => $user?->id ?? null,
+                'expiry_at' => Carbon::now()->addHour(),
                 'currency_id' => Currency::getIdByCode(Currency::RUBLES)
             ]);
 
