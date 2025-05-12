@@ -33,7 +33,7 @@ class InvoiceResource extends JsonResource
                 'created_at' => $this->created_at,
                 'expiry_at' => $this->expiry_at,
                 'created_at_format' => Carbon::parse($this->created_at)->format('d.m.Y H:i'),
-                'expiry_at_format' => Carbon::parse($this->expiry_at)->format('d.m.Y H:i'),
+                'expiry_at_format' => $this->expiry_at ? Carbon::parse($this->expiry_at)->format('d.m.Y H:i') : null,
             ],
         ];
     }

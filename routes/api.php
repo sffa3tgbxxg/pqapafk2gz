@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ExchangersController;
 use App\Http\Controllers\Api\InvoiceController;
+use App\Http\Controllers\Api\LogsController;
 use App\Http\Controllers\Api\MeController;
 use App\Http\Controllers\Api\MenuController;
 use App\Http\Controllers\Api\ServiceExchangerController;
@@ -72,4 +73,9 @@ Route::group(['prefix' => '/employees', 'middleware' => ['auth:api']], function 
     Route::post("/", [EmployeeController::class, 'store']);
     Route::put("/{employee}", [EmployeeController::class, 'update']);
     Route::delete("/{employee}", [EmployeeController::class, 'destroy']);
+});
+
+Route::group(['prefix' => "/logs", 'middleware' => ['auth:api', 'is-admin-user']], function () {
+    Route::get("/php", [LogsController::class, 'php']);
+    Route::get("/api", [LogsController::class, 'api']);
 });

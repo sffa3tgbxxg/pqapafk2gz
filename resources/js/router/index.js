@@ -11,38 +11,39 @@ import WithdrawsPage from "@/views/withdraws/WithdrawsPage.vue";
 
 const routes = [
   { path: "/auth", component: LoginPage, name: "Auth", meta: { requiresAuth: false } },
-  { path: "/", component: HomePage, name: "Home", meta: { requiresAuth: false } },
-  { path: "/services", component: ServicesPage, name: "Services", meta: { requiresAuth: false } },
+  // { path: "/", component: HomePage, name: "Home", meta: { requiresAuth: true } },
+  { path: "/", component: ServicesExchangersPage, name: "Home", meta: { requiresAuth: true } },
+  { path: "/services", component: ServicesPage, name: "Services", meta: { requiresAuth: true } },
   {
     path: "/service-exchangers",
     component: ServicesExchangersPage,
     name: "ServiceExchangers",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
   },
   {
     path: "/employees",
     component: EmployeesPage,
     name: "Employees",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
   },
-  { path: "/invoices", component: InvoicesPage, name: "Invoices", meta: { requiresAuth: false } },
+  { path: "/invoices", component: InvoicesPage, name: "Invoices", meta: { requiresAuth: true } },
   {
     path: "/exchangers",
     component: ExchangersPage,
     name: "Exchangers",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
   },
   {
     path: "/subscription",
     component: SubscriptionPage,
     name: "Subscription",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
   },
   {
     path: "/withdraws",
     component: WithdrawsPage,
     name: "Withdraws",
-    meta: { requiresAuth: false },
+    meta: { requiresAuth: true },
   },
 ];
 
@@ -52,8 +53,8 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.requiresAuth && localStorage.getItem("token")) {
-    next({ name: "Auth", query: { redirect: to.fullPath } });
+  if (to.meta.requiresAuth && !localStorage.getItem("token")) {
+    next({ name: "Auth" });
   } else {
     next();
   }

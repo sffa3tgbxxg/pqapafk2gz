@@ -29,9 +29,9 @@ class MenuService
     public function menu(): array
     {
         return [
-            'Home' => [
-                'name' => 'Главная',
-            ],
+//            'Home' => [
+//                'name' => 'Главная',
+//            ],
             'Services' => [
                 'name' => 'Сервисы',
             ],
