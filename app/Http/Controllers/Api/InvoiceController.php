@@ -7,6 +7,7 @@ use App\Facades\InvoiceFacade;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Invoice\CheckRequest;
 use App\Http\Requests\Invoice\IndexRequest;
+use App\Http\Requests\Invoice\SecondUpdateRequest;
 use App\Http\Requests\Invoice\StoreRequest;
 use App\Http\Requests\Invoice\UpdateRequest;
 use App\Http\Resources\InvoiceResource;
@@ -66,10 +67,20 @@ class InvoiceController extends Controller
      */
     public function cancelByService(Request $request, int $invoiceId): InvoiceResource
     {
-        $invoice = InvoiceFacade::setById($invoiceId)
-            ->setService($request->attributes->get('service'))
-            ->cancelInvoice()
-            ->getInvoice();
+        DB::beginTransaction();
+        try {
+            $invoice = InvoiceFacade::setById($invoiceId)
+                ->setService($request->attributes->get('service'))
+                ->cancelInvoice()
+                ->getInvoice();
+            DB::commit();
+        } catch (\Throwable $exception) {
+            DB::rollBack();
+            Logger::error("Не удалось отменить счет вручную",
+                [
+                    'message' => $exception->getMessage(),
+                ]);
+        }
 
         return new InvoiceResource($invoice);
     }
@@ -80,10 +91,21 @@ class InvoiceController extends Controller
     public function cancelByOperator(UpdateRequest $request, int $invoiceId): InvoiceResource
     {
         $data = $request->validated();
-        $invoice = InvoiceFacade::setById($invoiceId)
-            ->cancelInvoice(false)
-            ->setComment($data['comment'])
-            ->getInvoice();
+        DB::beginTransaction();
+        try {
+            $invoice = InvoiceFacade::setById($invoiceId)
+                ->cancelInvoice(false)
+                ->setComment($data['comment'])
+                ->getInvoice();
+
+            DB::commit();
+        } catch (\Throwable $exception) {
+            DB::rollBack();
+            Logger::error("Не удалось отменить счет вручную",
+                [
+                    'message' => $exception->getMessage(),
+                ]);
+        }
 
         return new InvoiceResource($invoice);
     }
@@ -104,5 +126,39 @@ class InvoiceController extends Controller
         $invoices = InvoiceFacade::getByIds($request->validated()['ids'], $request->attributes->get('service')?->id);
 
         return InvoiceResource::collection($invoices);
+    }
+
+    public function update(SecondUpdateRequest $request, int $invoiceId)
+    {
+        $data = $request->validated();
+
+        $invoice = InvoiceFacade::setById($invoiceId);
+        DB::beginTransaction();
+        try {
+            $invoice = $invoice
+                ->setComment($data['comment'])
+                ->updateStatus($data['status'])
+                ->getInvoice();
+            DB::commit();
+            return new InvoiceResource($invoice);
+        } catch (\Throwable $exception) {
+            DB::rollBack();
+            Logger::error("Не удалось отменить счет вручную",
+                [
+                    'message' => $exception->getMessage(),
+                ]);
+            throw new ServerErrorException();
+        }
+    }
+
+    public function statuses()
+    {
+        $data = Invoice::getStatusesForOperator();
+
+        return response()->json(
+            array_map(function ($key, $val) {
+                return ['code' => $key, 'name' => $val];
+            }, array_keys($data), array_values($data))
+            , 200);
     }
 }

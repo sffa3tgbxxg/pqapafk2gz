@@ -1,4 +1,9 @@
 {
+  "resources/css/inc/default.scss": {
+    "file": "assets/default-BnEFlqfV.css",
+    "src": "resources/css/inc/default.scss",
+    "isEntry": true
+  },
   "resources/font/Roboto.ttf": {
     "file": "assets/Roboto-3flh3niD.ttf",
     "src": "resources/font/Roboto.ttf"
@@ -144,12 +149,12 @@
     "src": "resources/font/Robotothinitalic.woff2"
   },
   "resources/js/app.js": {
-    "file": "assets/app-tywVLMy4.js",
+    "file": "assets/app-CJmGE072.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true,
     "css": [
-      "assets/app-C2IkJH6j.css"
+      "assets/app-C8QrGabt.css"
     ],
     "assets": [
       "assets/Robotothin-BHgCkRFG.woff2",

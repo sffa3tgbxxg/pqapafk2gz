@@ -51,6 +51,20 @@ class MenuService
                 'name' => "Обменники",
                 'policies' => [AdminPolicy::class],
             ],
+            'Logs' => [
+                'name' => 'Логи',
+                'pages' => [
+                    'PhpLogs' => [
+                        'name' => 'PHP',
+                    ],
+                    'ApiLogs' => [
+                        'name' => 'API',
+                    ],
+                    'InvoicesLogs' => [
+                        'name' => 'Счета',
+                    ],
+                ],
+            ],
             'Withdraws' => [
                 'name' => 'Выводы(В разработке)',
             ],

@@ -99,7 +99,7 @@ class InvoiceService
         return $this;
     }
 
-    public function setComment(string $comment): self
+    public function setComment(?string $comment): self
     {
         Invoice::query()->where('id', $this->invoice->id)->update(['comment' => $comment]);
 

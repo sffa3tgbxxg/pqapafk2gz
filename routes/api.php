@@ -56,9 +56,10 @@ Route::group(['prefix' => '/exchangers', 'middleware' => ['auth:api']], function
 Route::group(['prefix' => '/invoices'], function () {
     Route::get("/", [InvoiceController::class, 'index'])->middleware('auth:api');
     Route::post("/", [InvoiceController::class, 'store'])->middleware('service-subscribe');
-    Route::patch("/{invoice}", [InvoiceController::class, 'cancelByService'])->middleware('service-subscribe');
-    Route::put("/{invoice}", [InvoiceController::class, 'cancelByOperator'])->middleware('auth:api', 'access-invoice-user');
+    Route::patch("/{invoice}/cancel", [InvoiceController::class, 'cancelByService'])->middleware('service-subscribe');
+    Route::put("/{invoice}/cancel", [InvoiceController::class, 'cancelByOperator'])->middleware('auth:api', 'access-invoice-user');
     Route::put("/{invoice}/verified", [InvoiceController::class, 'acceptByOperator'])->middleware('auth:api', 'access-invoice-user');
+    Route::put("/{invoice}", [InvoiceController::class, 'update'])->middleware('auth:api', 'access-invoice-user');
     Route::get("/check", [InvoiceController::class, 'check'])->middleware('service-subscribe');
 });
 
@@ -66,6 +67,7 @@ Route::group(['prefix' => '/settings', 'middleware' => ['auth:api']], function (
     Route::get("/menu", [MenuController::class, 'index']);
     Route::get("/roles", [EmployeeController::class, 'rolesForEmployee'])->middleware('admin-or-subscribe-or-role-in-service');
     Route::get("/qr", [InvoiceController::class, 'qrCode']);
+    Route::get("/statuses", [InvoiceController::class, 'statuses']);
 });
 
 Route::group(['prefix' => '/employees', 'middleware' => ['auth:api']], function () {
@@ -78,4 +80,5 @@ Route::group(['prefix' => '/employees', 'middleware' => ['auth:api']], function 
 Route::group(['prefix' => "/logs", 'middleware' => ['auth:api', 'is-admin-user']], function () {
     Route::get("/php", [LogsController::class, 'php']);
     Route::get("/api", [LogsController::class, 'api']);
+    Route::get("/invoices", [LogsController::class, 'invoices']);
 });

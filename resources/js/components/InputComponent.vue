@@ -1,8 +1,8 @@
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-  name: 'InputComponent',
+  name: "InputComponent",
   props: {
     placeholder: {
       type: String,
@@ -12,41 +12,46 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    type:{
+    type: {
       type: String,
       required: false,
       default: "search",
-    }
+    },
+    readonly: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   setup(props, { emit }) {
     const onInput = (event) => {
-      const target = event.target as HTMLInputElement
-      emit('update:modelValue', target.value)
-    }
-    const isFocused = ref(false)
+      const target = event.target as HTMLInputElement;
+      emit("update:modelValue", target.value);
+    };
+    const isFocused = ref(false);
 
     const focused = () => {
-      isFocused.value = true
-    }
+      isFocused.value = true;
+    };
 
     const blured = () => {
-      isFocused.value = false
-    }
+      isFocused.value = false;
+    };
 
     return {
       blured,
       focused,
       onInput,
       isFocused,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>
   <div :class="['block-input-1', { 'active-block-input-1': isFocused || modelValue?.length > 0 }]">
     <input
+      :readonly="readonly"
       @focus="focused"
       @blur="blured"
       :value="modelValue"
@@ -54,11 +59,19 @@ export default defineComponent({
       :type="type"
       class="input-1"
     />
-    <span :class="['placeholder-input-1', { 'active-placeholder-input-1': modelValue?.length > 0 || isFocused || (modelValue != null && modelValue.toString().length > 0) }]">
+    <span
+      :class="[
+        'placeholder-input-1',
+        {
+          'active-placeholder-input-1':
+            modelValue?.length > 0 ||
+            isFocused ||
+            (modelValue != null && modelValue.toString().length > 0),
+        },
+      ]"
+    >
       {{ placeholder }}
     </span>
-
-
   </div>
 </template>
 

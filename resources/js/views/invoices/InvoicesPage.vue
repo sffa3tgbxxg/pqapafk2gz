@@ -35,9 +35,11 @@ export default defineComponent({
     const services = ref(null);
     const settings = useInvoices();
     const invoicesData = ref(null);
+    const statuses = ref(null);
 
     onMounted(async () => {
       services.value = (await useServices().getServices(false)).data;
+      statuses.value = await settings.getStatuses();
     });
 
     const search = async () => {
@@ -50,6 +52,7 @@ export default defineComponent({
       invoices,
       invoicesData,
       services,
+      statuses,
       search,
     };
   },
@@ -65,7 +68,7 @@ export default defineComponent({
         <DatePicker placeholder="Дата до *" v-model="formSearch.to" />
         <InputSearchComponent
           @select="(value) => (formSearch.service_id = value)"
-          placeholder="Выбрать сервис *"
+          placeholder="Выбрать сервис*"
         >
           <template v-for="service in services">
             <li :value="service?.id">{{ service.name }}</li>
@@ -123,7 +126,7 @@ export default defineComponent({
             <td>
               <div class="zkl2n1">
                 <IconInBox
-                  v-if="['pending', 'search'].includes(invoice.status.code)"
+                  v-if="['pending'].includes(invoice.status.code)"
                   @click="((showAcceptModal = !showAcceptModal), (targetInvoice = invoice))"
                   border-color="rgb(53 229 117)"
                   color="rgb(57 153 91)"
@@ -131,13 +134,13 @@ export default defineComponent({
                 />
                 <IconInBox
                   @click="((showCancelModal = !showCancelModal), (targetInvoice = invoice))"
-                  v-if="['pending', 'search'].includes(invoice.status.code)"
+                  v-if="['pending'].includes(invoice.status.code)"
                   text="Отменить"
                 />
                 <IconInBox
-                  @click="((showInfoModal = !showInfoModal), (targetInvoice = invoice))"
+                  @click="((showInfoModal = !showInfoModal), edit(invoice))"
                   v-if="!['pending', 'search'].includes(invoice.status.code)"
-                  text="Посмотреть"
+                  text="Изменить"
                 />
               </div>
             </td>
@@ -191,30 +194,26 @@ export default defineComponent({
       </div>
     </ModalComponent>
     <ModalComponent
+      @handle="update"
       v-if="showInfoModal"
       @close="showInfoModal = !showInfoModal"
-      @handle="accept(targetInvoice.id)"
-      :handleButton="false"
-      :title="`Информация о счете #${targetInvoice.id}`"
+      :title="`Информация о счете #${editForm.id}`"
     >
-      <div style="margin-top: 20px" class="addon-info-modal">
-        <div class="gdk34n">Сервис</div>
-        <div class="gdk33n">{{ targetInvoice.service.name }}</div>
-        <div class="gdk34n">Сумма</div>
-        <div class="gdk33n">{{ targetInvoice.amount.out }} RUB</div>
-        <div class="gdk34n" style="height: 100px">Комментарий</div>
-        <div
-          class="gdk33n"
-          style="
-            max-width: 280px;
-            height: 100px;
-            white-space: normal;
-            text-wrap: wrap;
-            overflow-y: auto;
-          "
+      <div class="gkn312">
+        <InputComponent :readonly="true" v-model="editForm.id" placeholder="ID" />
+        <InputComponent :readonly="true" v-model="editForm.date" placeholder="Дата" />
+        <InputComponent :readonly="true" v-model="editForm.amount" placeholder="Сумма" />
+        <InputComponent :readonly="true" v-model="editForm.exchanger_name" placeholder="Обменник" />
+        <InputSearchComponent
+          @select="(value) => (editForm.status.code = value)"
+          :selectedLabelProp="editForm.status.name"
+          placeholder="Статус"
         >
-          {{ targetInvoice.comment }}
-        </div>
+          <template v-for="status in statuses">
+            <li :value="status?.code">{{ status?.name }}</li>
+          </template>
+        </InputSearchComponent>
+        <TextAreaComponent v-model="editForm.comment" placeholder="Комментарий" />
       </div>
     </ModalComponent>
   </UserTemplate>

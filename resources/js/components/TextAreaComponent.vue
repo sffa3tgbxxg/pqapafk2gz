@@ -16,6 +16,10 @@ export default defineComponent({
       type: String,
       required: false,
       default: "search",
+    },
+    style:{
+      type: String,
+      required: false,
     }
   },
   emits: ['update:modelValue'],
@@ -45,7 +49,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="['block-input-1','textarea-1', { 'active-block-input-1': isFocused || modelValue?.length > 0 }]">
+  <div :style="style" :class="['block-input-1','textarea-1', { 'active-block-input-1': isFocused || modelValue?.length > 0 }]">
     <textarea
       @focus="focused"
       @blur="blured"

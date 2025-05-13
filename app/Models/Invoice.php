@@ -36,6 +36,9 @@ class Invoice extends Model
     public const CANCEL_INVALID = 'cancel_invalid';
     public const PENDING_CONFIRM = 'pending_confirm';
     public const CANCEL = "cancel";
+    public const KYC = "kyc";
+    public const PROBLEM = "problem";
+    public const CONSIDERATION = "consideration";
 
     public const STATUSES = [
         self::SEARCH => 'Поиск реквизитов',
@@ -50,7 +53,22 @@ class Invoice extends Model
         self::CANCEL_INVALID => 'Невалидная заявка',
         self::PENDING_CONFIRM => 'Ожидает подтверждения',
         self::CANCEL => 'Отменен',
+        self::KYC => 'Нужна верификация (KYC)',
+        self::PROBLEM => 'Проблемный платеж',
+        self::CONSIDERATION => 'На рассмотрении',
     ];
+
+    public static function getStatusesForOperator(): array
+    {
+        return [
+            self::PAID_OPERATOR => self::STATUSES[self::PAID_OPERATOR],
+            self::CANCEL_OPERATOR => self::STATUSES[self::CANCEL_OPERATOR],
+            self::KYC => self::STATUSES[self::KYC],
+            self::PROBLEM => self::STATUSES[self::PROBLEM],
+            self::CONSIDERATION => self::STATUSES[self::CONSIDERATION],
+            self::ERROR => self::STATUSES[self::ERROR],
+        ];
+    }
 
     public function status(): Attribute
     {

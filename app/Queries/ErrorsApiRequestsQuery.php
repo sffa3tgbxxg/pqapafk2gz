@@ -9,9 +9,17 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
 {
     private ApiRequestsErrors $filters;
 
-    public function generate()
+    public function generate(): array
     {
-        $condition = $this->getCondition();
+        return [
+            'data' => $this->query(),
+            'count' => $this->query(false),
+        ];
+    }
+
+    public function query($limit = true): array|int
+    {
+        $condition = $this->getCondition($limit);
 
         $sql = "
         SELECT
@@ -24,7 +32,7 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
             {$condition}
         ";
 
-        return $this->client->select($sql)->rows();
+        return $limit ? $this->client->select($sql)->rows() : $this->client->select($sql)->count();
     }
 
     public function setFilters(ApiRequestsErrors $filters): self
@@ -34,17 +42,22 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
         return $this;
     }
 
-    private function getCondition(): string
+    private function getCondition($limit = true): string
     {
         $condition = " WHERE";
 
-        $condition .= " time BETWEEN {$this->filters->dateFrom} AND {$this->filters->dateTo}";
+        $condition .= " time BETWEEN '{$this->filters->dateFrom}' AND '{$this->filters->dateTo}'";
 
         if ($this->filters->invoiceId) {
             $condition .= " AND invoice_id = {$this->filters->invoiceId}";
         }
         if ($this->filters->exchangerId) {
             $condition .= " AND exchanger_id = {$this->filters->exchangerId}";
+        }
+
+        if ($limit) {
+            $offset = ($this->filters->page - 1) * $this->filters->limit;
+            $condition .= " LIMIT {$offset}, {$this->filters->limit}";
         }
 
         return $condition;

@@ -1,36 +1,54 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
-import { useMenuStore } from '@/store/Menu'
-import { storeToRefs } from 'pinia'
-import Icons from '@/composables/Icons'
-import { useRoute } from 'vue-router'
+import { computed, defineComponent } from "vue";
+import { useMenuStore } from "@/store/Menu";
+import { storeToRefs } from "pinia";
+import Icons from "@/composables/Icons";
+import { useRoute } from "vue-router";
+import { ChevronLeftIcon } from "@heroicons/vue/16/solid";
+import SidebarMenu from "@/components/SidebarMenu.vue";
 
 export default defineComponent({
-  name: 'Sidebar',
+  name: "Sidebar",
+  components: { SidebarMenu, ChevronLeftIcon },
   setup() {
-    const route = useRoute()
-    const menuStore = useMenuStore()
-    const { getMenu } = storeToRefs(menuStore) // теперь getMenu — это реактивное значение
+    const route = useRoute();
+    const menuStore = useMenuStore();
+    const { getMenu } = storeToRefs(menuStore); // теперь getMenu — это реактивное значение
 
     const menu = computed(() => {
-      const items = []
+      const items = [];
       for (const key in getMenu.value) {
-        const item = getMenu.value[key]
+        const item = getMenu.value[key];
+        const pagesObj = item?.pages;
+        let pagesObjIns = [];
+        if (pagesObj) {
+          for (const keyPage in pagesObj) {
+            const itemPage = pagesObj[keyPage];
+            pagesObjIns.push({
+              active: keyPage == route.name,
+              title: itemPage.name,
+              to: { name: keyPage },
+              icon: Icons[keyPage],
+            });
+          }
+        }
+
         items.push({
           active: key == route.name,
           title: item.name,
-          to: { name: key }, // используем ключ как route name,
+          ...(pagesObjIns.length === 0 ? { to: { name: key } } : {}),
+          pages: pagesObjIns,
           icon: Icons[key],
-        })
+        });
       }
-      return items
-    })
+      return items;
+    });
 
     return {
       menu,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>
@@ -44,13 +62,7 @@ export default defineComponent({
         <div class="">
           <ul class="klzk3">
             <template v-for="itemMenu in menu">
-              <li>
-                <router-link :class="[{'active-m21': itemMenu.active }]" :to="itemMenu?.to">
-                  <component style="width: 16px; height: 16px" :is="itemMenu?.icon" />
-                  <span>{{ itemMenu.title }}</span>
-                  <!--                  <ChevronLeftIcon style="width: 16px; height: 16px; margin-left: auto" />-->
-                </router-link>
-              </li>
+              <SidebarMenu :itemMenu="itemMenu" />
             </template>
           </ul>
         </div>

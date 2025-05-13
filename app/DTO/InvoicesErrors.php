@@ -2,10 +2,11 @@
 
 namespace App\DTO;
 
-class PhpErrors
+class InvoicesErrors
 {
     public string $dateFrom;
     public string $dateTo;
-    public int $limit = 20;
+    public ?int $invoiceId = null;
     public int $page = 1;
+    public int $limit = 20;
 }

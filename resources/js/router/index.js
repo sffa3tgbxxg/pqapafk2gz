@@ -8,6 +8,9 @@ import InvoicesPage from "@/views/invoices/InvoicesPage.vue";
 import ExchangersPage from "@/views/exchangers/ExchangersPage.vue";
 import SubscriptionPage from "@/views/subscriptions/SubscriptionPage.vue";
 import WithdrawsPage from "@/views/withdraws/WithdrawsPage.vue";
+import PhpErrorsLogsPage from "@/views/logs/PhpErrorsLogsPage.vue";
+import ApiErrorsLogsPage from "@/views/logs/ApiErrorsLogsPage.vue";
+import InvoicesErrorsLogsPage from "@/views/logs/InvoicesErrorsLogsPage.vue";
 
 const routes = [
   { path: "/auth", component: LoginPage, name: "Auth", meta: { requiresAuth: false } },
@@ -43,6 +46,24 @@ const routes = [
     path: "/withdraws",
     component: WithdrawsPage,
     name: "Withdraws",
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/logs/php",
+    component: PhpErrorsLogsPage,
+    name: "PhpLogs",
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/logs/api",
+    component: ApiErrorsLogsPage,
+    name: "ApiLogs",
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/logs/invoices",
+    component: InvoicesErrorsLogsPage,
+    name: "InvoicesLogs",
     meta: { requiresAuth: true },
   },
 ];

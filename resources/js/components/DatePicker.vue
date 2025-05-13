@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
-import { format } from 'date-fns'
+import { defineComponent, ref, watch } from "vue";
+import { format } from "date-fns";
+import { parse } from "date-fns/parse";
 
 export default defineComponent({
-  name: 'DatePicker',
+  name: "DatePicker",
   props: {
     placeholder: {
       type: String,
@@ -14,11 +15,11 @@ export default defineComponent({
     },
     format: {
       type: String,
-      default: 'dd.MM.yyyy',
+      default: "dd.MM.yyyy",
     },
     locale: {
       type: String,
-      default: 'ru',
+      default: "ru",
     },
     width: {
       type: Number,
@@ -29,27 +30,27 @@ export default defineComponent({
       default: 42,
     },
   },
-  emits: ['update:modelValue'],
+  emits: ["update:modelValue"],
   setup(props, { emit }) {
-    const model = ref(props.modelValue)
+    const model = ref(props.modelValue ? parse(props.modelValue, props.format, new Date()) : null);
 
     watch(model, (newValue) => {
       if (newValue) {
         // Форматируем даты в dd.MM.yyyy
         const formatted = Array.isArray(newValue)
-          ? newValue.map((date) => format(date, 'dd.MM.yyyy'))
-          : format(newValue, 'dd.MM.yyyy')
-        emit('update:modelValue', formatted)
+          ? newValue.map((date) => format(date, props.format))
+          : format(newValue, props.format);
+        emit("update:modelValue", formatted);
       } else {
-        emit('update:modelValue', null)
+        emit("update:modelValue", null);
       }
-    })
+    });
 
     return {
       model,
-    }
+    };
   },
-})
+});
 </script>
 
 <template>

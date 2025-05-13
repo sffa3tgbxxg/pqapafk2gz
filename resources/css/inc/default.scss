@@ -37,6 +37,12 @@ body {
   height: 100%;
 }
 
+.gk3nz {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+}
+
 .li3n {
   flex: 0;
   padding: 12px;
@@ -56,6 +62,7 @@ body {
     align-items: center;
     width: 100%;
     color: #9099ac;
+    user-select: none;
 
     span {
       margin-left: 8px;
@@ -743,6 +750,33 @@ table.table-1 {
   animation: rotationLoader 1s linear infinite;
 }
 
+.gkn312 {
+  flex-direction: column;
+  display: flex;
+  gap: 24px;
+}
+
+.gksn3zklI {
+  transition: .2s;
+}
+
+.gfsdlg39 {
+  transform: rotate(-90deg);
+}
+
+
+.submenu {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  margin-top: 0;
+  transition: max-height 0.3s ease,
+  opacity 0.3s ease,
+  margin-top 0.3s ease;
+}
+
 @keyframes rotationLoader {
   0% {
     transform: rotate(0deg);
@@ -750,4 +784,22 @@ table.table-1 {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.submenu--open {
+  max-height: 500px;
+  opacity: 1;
+  margin-top: 15px;
+}
+
+.zl3nz90 {
+  max-height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  transition: max-height .2s;
+}
+
+.zl3nz90-a {
+  max-height: unset;
 }

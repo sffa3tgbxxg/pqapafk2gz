@@ -7,7 +7,10 @@ import {
   ServerIcon,
   ServerStackIcon,
   UsersIcon,
-} from '@heroicons/vue/16/solid'
+  ExclamationTriangleIcon,
+  WifiIcon,
+  CommandLineIcon,
+} from "@heroicons/vue/16/solid";
 
 export default {
   Home: Squares2X2Icon,
@@ -18,4 +21,8 @@ export default {
   Services: ServerIcon,
   ServiceExchangers: ServerStackIcon,
   Employees: UsersIcon,
-}
+  Logs: ExclamationTriangleIcon,
+  PhpLogs: CommandLineIcon,
+  ApiLogs: WifiIcon,
+  InvoicesLogs: CreditCardIcon,
+};
