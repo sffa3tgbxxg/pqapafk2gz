@@ -39,6 +39,13 @@ class InvoicesQuery
             ->when($this->filters->status, function (Builder $query) {
                 $query->where('status', $this->filters->status);
             })
+            ->when($this->filters->problem, function (Builder $query) {
+                $query->whereIn('status',[
+                   Invoice::PROBLEM,
+                   Invoice::KYC,
+                   Invoice::CONSIDERATION,
+                ]);
+            })
             ->orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->paginate(20);

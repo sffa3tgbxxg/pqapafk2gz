@@ -3,8 +3,10 @@
 namespace App\Http\Requests\Invoice;
 
 use App\DTO\Invoices;
+use App\Models\Invoice;
 use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class IndexRequest extends FormRequest
 {
@@ -25,7 +27,8 @@ class IndexRequest extends FormRequest
             'exchanger_id' => ['nullable', 'integer'],
             'id' => ['nullable', 'integer'],
             'external_id' => ['nullable', 'integer'],
-            'status' => ['nullable', 'string'],
+            'status' => ['nullable', 'string', Rule::in(array_keys(Invoice::STATUSES))],
+            'problem' => ['nullable', 'boolean'],
         ];
     }
 
@@ -55,7 +58,8 @@ class IndexRequest extends FormRequest
         $invoiceDTO->serviceId = $this->integer('service_id');
         $invoiceDTO->invoiceId = $this->integer('id');
         $invoiceDTO->externalInvoiceId = $this->integer('external_id');
-        $invoiceDTO->status = $this->integer('status');
+        $invoiceDTO->status = $this->string('status');
+        $invoiceDTO->problem = $this->boolean('problem');
 
         return $invoiceDTO;
     }

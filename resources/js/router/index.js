@@ -32,13 +32,7 @@ const routes = [
   {
     path: "/invoices",
     component: InvoicesPage,
-    name: "InvoicesTotal",
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/invoices/problems",
-    component: InvoicesPage,
-    name: "InvoicesProblem",
+    name: "Invoices",
     meta: { requiresAuth: true },
   },
   {

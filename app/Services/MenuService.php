@@ -40,14 +40,6 @@ class MenuService
             ],
             'Invoices' => [
                 'name' => 'Счета',
-                'pages' => [
-                    'InvoicesTotal' => [
-                        'name' => 'Все',
-                    ],
-                    'InvoicesProblem' => [
-                        'name' => 'Проблемные'
-                    ]
-                ],
             ],
             'Employees' => [
                 'name' => 'Сотрудники',

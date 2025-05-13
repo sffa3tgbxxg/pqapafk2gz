@@ -74,6 +74,19 @@ export default defineComponent({
             <li :value="service?.id">{{ service.name }}</li>
           </template>
         </InputSearchComponent>
+        <InputSearchComponent
+          @select="(value) => (formSearch.problem = value)"
+          placeholder="Проблемные"
+        >
+          <li :value="0">Любые</li>
+          <li :value="1">Да</li>
+        </InputSearchComponent>
+        <InputSearchComponent @select="(value) => (formSearch.status = value)" placeholder="Статус">
+          <template v-for="statusSearch in statuses">
+            <li :value="null">Любой</li>
+            <li :value="statusSearch.code">{{ statusSearch.name }}</li>
+          </template>
+        </InputSearchComponent>
         <InputSearchComponent placeholder="Выбрать платежную систему"></InputSearchComponent>
 
         <InputComponent v-model="formSearch.user" placeholder="ID Счета" />

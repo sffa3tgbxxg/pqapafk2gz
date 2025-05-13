@@ -26,12 +26,13 @@ export function useInvoices() {
   });
 
   const formSearch = ref({
-    from: format(new Date().setMonth(new Date().getMonth() - 1), 'dd.MM.yyyy'),
-    to: format(new Date(), 'dd.MM.yyyy'),
+    from: format(new Date().setMonth(new Date().getMonth() - 1), "dd.MM.yyyy"),
+    to: format(new Date(), "dd.MM.yyyy"),
     service_id: null,
     exchanger_id: null,
     user: null,
     page: 1,
+    problem: 0,
   });
 
   const notification = useNotification();

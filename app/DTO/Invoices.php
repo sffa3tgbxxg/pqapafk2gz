@@ -14,5 +14,5 @@ class Invoices
     public int $exchangerId;
     public int $invoiceId;
     public int $externalInvoiceId;
-
+    public bool $problem;
 }
