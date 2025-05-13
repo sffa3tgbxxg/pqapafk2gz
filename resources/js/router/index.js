@@ -8,9 +8,9 @@ import InvoicesPage from "@/views/invoices/InvoicesPage.vue";
 import ExchangersPage from "@/views/exchangers/ExchangersPage.vue";
 import SubscriptionPage from "@/views/subscriptions/SubscriptionPage.vue";
 import WithdrawsPage from "@/views/withdraws/WithdrawsPage.vue";
-import PhpErrorsLogsPage from "@/views/logs/PhpErrorsLogsPage.vue";
-import ApiErrorsLogsPage from "@/views/logs/ApiErrorsLogsPage.vue";
-import InvoicesErrorsLogsPage from "@/views/logs/InvoicesErrorsLogsPage.vue";
+import PhpErrorsLogsPage from "@/views/logs_pages/PhpErrorsLogsPage.vue";
+import ApiErrorsLogsPage from "@/views/logs_pages/ApiErrorsLogsPage.vue";
+import InvoicesErrorsLogsPage from "@/views/logs_pages/InvoicesErrorsLogsPage.vue";
 
 const routes = [
   { path: "/auth", component: LoginPage, name: "Auth", meta: { requiresAuth: false } },
