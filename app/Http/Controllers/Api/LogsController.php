@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Logs\ApiErrorsRequest;
-use App\Http\Requests\Logs\InvoicesErrorsRequest;
-use App\Http\Requests\Logs\PhpErrorsRequest;
+use App\Http\Requests\_Logs\ApiErrorsRequest;
+use App\Http\Requests\_Logs\InvoicesErrorsRequest;
+use App\Http\Requests\_Logs\PhpErrorsRequest;
 use App\Http\Resources\ApiErrorsResource;
 use App\Http\Resources\InvoicesErrorsResource;
 use App\Http\Resources\PhpErrorsResource;
