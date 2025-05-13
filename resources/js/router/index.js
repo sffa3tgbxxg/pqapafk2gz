@@ -29,7 +29,18 @@ const routes = [
     name: "Employees",
     meta: { requiresAuth: true },
   },
-  { path: "/invoices", component: InvoicesPage, name: "Invoices", meta: { requiresAuth: true } },
+  {
+    path: "/invoices",
+    component: InvoicesPage,
+    name: "InvoicesTotal",
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/invoices/problems",
+    component: InvoicesPage,
+    name: "InvoicesProblem",
+    meta: { requiresAuth: true },
+  },
   {
     path: "/exchangers",
     component: ExchangersPage,

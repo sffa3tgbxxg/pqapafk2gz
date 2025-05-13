@@ -39,7 +39,15 @@ class MenuService
                 'name' => 'Платежные методы',
             ],
             'Invoices' => [
-                'name' => 'Счета'
+                'name' => 'Счета',
+                'pages' => [
+                    'InvoicesTotal' => [
+                        'name' => 'Все',
+                    ],
+                    'InvoicesProblem' => [
+                        'name' => 'Проблемные'
+                    ]
+                ],
             ],
             'Employees' => [
                 'name' => 'Сотрудники',
@@ -64,6 +72,7 @@ class MenuService
                         'name' => 'Счета',
                     ],
                 ],
+                'policies' => [AdminPolicy::class]
             ],
             'Withdraws' => [
                 'name' => 'Выводы(В разработке)',

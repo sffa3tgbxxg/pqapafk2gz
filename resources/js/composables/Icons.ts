@@ -10,11 +10,15 @@ import {
   ExclamationTriangleIcon,
   WifiIcon,
   CommandLineIcon,
+  FlagIcon,
+  CurrencyEuroIcon,
 } from "@heroicons/vue/16/solid";
 
 export default {
   Home: Squares2X2Icon,
   Invoices: CreditCardIcon,
+  InvoicesTotal: CurrencyEuroIcon,
+  InvoicesProblem: FlagIcon,
   Exchangers: CurrencyDollarIcon,
   Subscription: IdentificationIcon,
   Withdraws: WalletIcon,

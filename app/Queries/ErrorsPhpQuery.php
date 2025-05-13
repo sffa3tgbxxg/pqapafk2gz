@@ -30,7 +30,8 @@ class ErrorsPhpQuery extends ClickhouseClient
 
         if ($limit) {
             $offset = ($this->filters->page - 1) * $this->filters->limit;
-            $query .= " LIMIT {$offset}, {$this->filters->limit}";
+            $query .= " ORDER BY time DESC";
+            $query .= " LIMIT {$offset}, {$this->filters->limit} ";
         }
 
         $args = [

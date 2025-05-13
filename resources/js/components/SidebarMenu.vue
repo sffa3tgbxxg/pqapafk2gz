@@ -1,7 +1,7 @@
 <script lang="ts">
 import { ChevronLeftIcon } from "@heroicons/vue/16/solid/index.js";
 
-import {  defineComponent, ref } from 'vue'
+import { defineComponent, ref } from "vue";
 import { useRoute } from "vue-router";
 
 export default defineComponent({
@@ -13,11 +13,12 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const showAddonPages = ref(() => {
-      return props.itemMenu.pages.some((itemPage) => itemPage.active);
-    });
-
+    const showAddonPages = ref(false);
     const route = useRoute();
+
+    if (props.itemMenu.pages.length > 0) {
+      showAddonPages.value = props.itemMenu.pages.some((val) => val.to.name == route.name);
+    }
 
     return {
       showAddonPages,

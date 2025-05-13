@@ -19,14 +19,23 @@ class InvoicesErrorsQuery extends ClickhouseClient
 
     public function query($limit = true): array|int
     {
+        $condition = $limit ? $this->condition() : $this->condition(false);
+
         $query = "
            SELECT 
                 invoice_id,
                 error_message as message,
                 time as created_at
             FROM invoices_errors_logs
-           {$this->condition()}
+                {$condition}
         ";
+
+        if ($limit) {
+            $offset = ($this->filters->page - 1) * $this->filters->limit;
+            $query .= " ORDER BY time DESC";
+            $query .= " LIMIT {$offset}, {$this->filters->limit} ";
+        }
+
 
         return $limit ? $this->client->select($query)->rows() : $this->client->select($query)->count();
     }
@@ -39,12 +48,6 @@ class InvoicesErrorsQuery extends ClickhouseClient
         if ($this->filters->invoiceId) {
             $condition .= " AND invoice_id = {$this->filters->invoiceId}";
         }
-
-        if ($limit) {
-            $offset = ($this->filters->page - 1) * $this->filters->limit;
-            $condition .= " LIMIT {$offset}, {$this->filters->limit}";
-        }
-
 
         return $condition;
     }

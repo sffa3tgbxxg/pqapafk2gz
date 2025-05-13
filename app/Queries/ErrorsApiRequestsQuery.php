@@ -21,7 +21,7 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
     {
         $condition = $this->getCondition($limit);
 
-        $sql = "
+        $query = "
         SELECT
             invoice_id,
             exchanger_id,
@@ -32,7 +32,13 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
             {$condition}
         ";
 
-        return $limit ? $this->client->select($sql)->rows() : $this->client->select($sql)->count();
+        if ($limit) {
+            $offset = ($this->filters->page - 1) * $this->filters->limit;
+            $query .= " ORDER BY time DESC";
+            $query .= " LIMIT {$offset}, {$this->filters->limit} ";
+        }
+
+        return $limit ? $this->client->select($query)->rows() : $this->client->select($query)->count();
     }
 
     public function setFilters(ApiRequestsErrors $filters): self
@@ -53,11 +59,6 @@ class ErrorsApiRequestsQuery extends ClickhouseClient
         }
         if ($this->filters->exchangerId) {
             $condition .= " AND exchanger_id = {$this->filters->exchangerId}";
-        }
-
-        if ($limit) {
-            $offset = ($this->filters->page - 1) * $this->filters->limit;
-            $condition .= " LIMIT {$offset}, {$this->filters->limit}";
         }
 
         return $condition;
