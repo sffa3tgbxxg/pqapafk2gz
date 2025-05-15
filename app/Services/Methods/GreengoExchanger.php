@@ -4,6 +4,7 @@ namespace App\Services\Methods;
 
 use App\Models\Exchanger;
 use App\Models\Invoice;
+use App\Repositories\clickhouse\InvoiceHistoryRepository;
 use App\Services\Logger;
 use App\Traits\Curl;
 use Illuminate\Support\Facades\DB;
@@ -15,6 +16,10 @@ class GreengoExchanger implements PaymentMethodContract
     use Curl;
 
     private string $endpoint;
+
+    public function __construct(private InvoiceHistoryRepository $invoiceHistoryRepository)
+    {
+    }
 
     public function cancel(Invoice $invoice, string $status): void
     {
@@ -28,14 +33,17 @@ class GreengoExchanger implements PaymentMethodContract
         DB::beginTransaction();
         try {
             Invoice::query()->where('id', $invoice->id)->update(['status' => $status]);
+            DB::commit();
         } catch (\Throwable $exception) {
             DB::rollBack();
             Logger::error($exception->getMessage());
             throw new \Exception($exception->getMessage());
         }
+
+        $this->invoiceHistoryRepository->insert($invoice->id, $status, "api", userId: auth()?->user()?->id ?? null);
     }
 
-    public function getBalance(string $endpoint, string $apiKey): float
+    public function getBalance(string $endpoint, string $apiKey, ?string $secretKey): float
     {
         return 0.0;
     }

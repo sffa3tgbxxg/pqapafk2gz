@@ -10,7 +10,7 @@ use App\Traits\Curl;
 use Illuminate\Support\Facades\DB;
 
 
-class LuckyPayExchanger implements PaymentMethodContract
+class BitlogaExchanger implements PaymentMethodContract
 {
     use Curl;
 
@@ -39,11 +39,11 @@ class LuckyPayExchanger implements PaymentMethodContract
     {
         $invoice = Invoice::query()
             ->lockForUpdate()
-            ->where('id', '=', $data['client_order_id'] ?? null)
+            ->where('id', $data['uniqueid'])
             ->first();
 
-        if ($data['order_side'] != 'Buy' || $invoice == null) {
-            Logger::error("[LuckyPay] Отправили Callback с другим order_side, или счет не найден", [
+        if ($invoice == null) {
+            Logger::error("[Bitloga] В отправленном Callback счет не найден", [
                 'Callback' => json_encode($data),
             ]);
             throw new ServerErrorException();
@@ -55,7 +55,7 @@ class LuckyPayExchanger implements PaymentMethodContract
             DB::commit();
         } catch (\Throwable $exception) {
             DB::rollBack();
-            Logger::error("Не удалось обновить статус у заявки через Callback LuckyPay",
+            Logger::error("[Bitloga] Не удалось обновить статус у заявки через Callback",
                 [
                     'message' => $exception->getMessage()
                 ]);
@@ -68,16 +68,17 @@ class LuckyPayExchanger implements PaymentMethodContract
     private function processStatus(Invoice $invoice, string $status): string
     {
         switch ($status) {
-            case 'Completed':
+            case 'Payed':
                 $status = Invoice::PAID;
                 break;
-            case 'CanceledByTimeout':
+            case 'Canceled':
                 $status = Invoice::CANCEL_TIME;
-            case 'CanceledByService':
-                $status = Invoice::CANCEL;
+                break;
+            case 'Error':
+                $status = Invoice::ERROR;
                 break;
             default:
-                Logger::error("[LuckyPay] отправили неизвестный статус", [
+                Logger::error("Luckypay отправили неизвестный статус", [
                     'status' => $status,
                     'invoice' => json_encode($invoice),
                 ]);

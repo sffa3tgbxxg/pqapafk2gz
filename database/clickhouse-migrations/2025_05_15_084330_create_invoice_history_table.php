@@ -10,8 +10,12 @@ return new class extends AbstractClickhouseMigration
     {
         $this->clickhouseClient->write(
             <<<SQL
-            CREATE TABLE IF NOT EXISTS php_errors_logs (
-                error_message String,
+            CREATE TABLE IF NOT EXISTS invoice_history (
+                invoice_id UInt64,
+                status String,
+                updated_by String,
+                user_id Nullable(UInt64),
+                details Nullable(String),
                 time DateTime
             ) ENGINE = MergeTree()
             ORDER BY (time)

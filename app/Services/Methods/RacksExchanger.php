@@ -10,7 +10,7 @@ use App\Traits\Curl;
 use Illuminate\Support\Facades\DB;
 
 
-class LuckyPayExchanger implements PaymentMethodContract
+class RacksExchanger implements PaymentMethodContract
 {
     use Curl;
 
@@ -22,6 +22,13 @@ class LuckyPayExchanger implements PaymentMethodContract
 
     public function cancel(Invoice $invoice, string $status): void
     {
+        $this->curlGet("{$invoice->exchanger->endpoint}/fiat_api/cancel", ['id' => [$invoice->external_id]],
+            [
+                'Authorization' => "Bearer {$invoice->serviceExchanger->api_key}",
+                'Content-Type' => 'application/json',
+            ]
+        );
+
         DB::beginTransaction();
         try {
             Invoice::query()->where('id', $invoice->id)->update(['status' => $status]);
@@ -37,13 +44,21 @@ class LuckyPayExchanger implements PaymentMethodContract
 
     public function handleCallback(array $data): void
     {
+        $order = $data['order'][0] ?? null;
+        if ($order == null) {
+            Logger::error("[Racks] В отправленном Callback счет не найден", [
+                'Callback' => json_encode($data),
+            ]);
+            throw new ServerErrorException();
+        }
+
         $invoice = Invoice::query()
             ->lockForUpdate()
-            ->where('id', '=', $data['client_order_id'] ?? null)
+            ->where('external_id', $order['id'])
             ->first();
 
-        if ($data['order_side'] != 'Buy' || $invoice == null) {
-            Logger::error("[LuckyPay] Отправили Callback с другим order_side, или счет не найден", [
+        if ($invoice == null) {
+            Logger::error("[Racks] В отправленном Callback счет не найден", [
                 'Callback' => json_encode($data),
             ]);
             throw new ServerErrorException();
@@ -55,7 +70,7 @@ class LuckyPayExchanger implements PaymentMethodContract
             DB::commit();
         } catch (\Throwable $exception) {
             DB::rollBack();
-            Logger::error("Не удалось обновить статус у заявки через Callback LuckyPay",
+            Logger::error("[Racks] Не удалось обновить статус у заявки через Callback R",
                 [
                     'message' => $exception->getMessage()
                 ]);
@@ -68,16 +83,20 @@ class LuckyPayExchanger implements PaymentMethodContract
     private function processStatus(Invoice $invoice, string $status): string
     {
         switch ($status) {
-            case 'Completed':
+            case 'Payed':
                 $status = Invoice::PAID;
                 break;
-            case 'CanceledByTimeout':
+            case 'Canceled':
                 $status = Invoice::CANCEL_TIME;
-            case 'CanceledByService':
-                $status = Invoice::CANCEL;
+                break;
+            case 'Error':
+                $status = Invoice::ERROR;
+                break;
+            case "Pending":
+                $status = Invoice::PENDING;
                 break;
             default:
-                Logger::error("[LuckyPay] отправили неизвестный статус", [
+                Logger::error("[Racks] отправили неизвестный статус", [
                     'status' => $status,
                     'invoice' => json_encode($invoice),
                 ]);
@@ -91,7 +110,7 @@ class LuckyPayExchanger implements PaymentMethodContract
 
     public function getBalance(string $endpoint, string $apiKey, ?string $secretKey): float
     {
-        $response = $this->curlGet("{$endpoint}/api/v1/finance/balance", headers: ['Content-Type' => 'application/json', 'X-API-KEY' => $apiKey]);
+        $response = $this->curlGet("{$endpoint}/fiat_api/balance", ['private_key' => $secretKey], headers: ['Content-Type' => 'application/json', 'Authorization' => "Bearer {$apiKey}"]);
         return (float)$response['deposit']['available'] ?? 0.0;
     }
 }

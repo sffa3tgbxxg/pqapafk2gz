@@ -10,7 +10,7 @@ return new class extends AbstractClickhouseMigration
     {
         $this->clickhouseClient->write(
             <<<SQL
-            CREATE TABLE invoices_errors_logs (
+            CREATE TABLE IF NOT EXISTS invoices_errors_logs (
                 invoice_id UInt64,
                 error_message String,
                 time DateTime

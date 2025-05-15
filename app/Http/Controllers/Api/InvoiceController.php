@@ -80,6 +80,7 @@ class InvoiceController extends Controller
                 [
                     'message' => $exception->getMessage(),
                 ]);
+            throw new ServerErrorException();
         }
 
         return new InvoiceResource($invoice);
@@ -105,6 +106,7 @@ class InvoiceController extends Controller
                 [
                     'message' => $exception->getMessage(),
                 ]);
+            throw new ServerErrorException();
         }
 
         return new InvoiceResource($invoice);

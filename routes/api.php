@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AccountController;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\CallbackController;
 use App\Http\Controllers\Api\EmployeeController;
 use App\Http\Controllers\Api\ExchangersController;
 use App\Http\Controllers\Api\InvoiceController;
@@ -81,4 +82,10 @@ Route::group(['prefix' => "/logs", 'middleware' => ['auth:api', 'is-admin-user']
     Route::get("/php", [LogsController::class, 'php']);
     Route::get("/api", [LogsController::class, 'api']);
     Route::get("/invoices", [LogsController::class, 'invoices']);
+});
+
+Route::group(['prefix' => "/callback"], function () {
+    Route::get("/racks", [CallbackController::class, 'racks']);
+    Route::get("/bitloga", [CallbackController::class, 'bitloga']);
+    Route::get("/luckypay", [CallbackController::class, 'luckypay']);
 });

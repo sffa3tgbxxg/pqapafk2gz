@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use App\Models\Service;
 use App\Models\ServiceExchanger;
 use App\Models\UserService;
+use App\Repositories\clickhouse\InvoiceHistoryRepository;
 use App\Services\Methods\PaymentMethodContract;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
@@ -21,6 +22,10 @@ class InvoiceService
     private Invoice $invoice;
     private Service $service;
 
+    public function __construct(private InvoiceHistoryRepository $invoiceHistoryRepository)
+    {
+    }
+
     /**
      * @throws ServerErrorException
      */
@@ -31,7 +36,9 @@ class InvoiceService
         }
 
         $invoice = $this->createInvoiceBase($service->id, $data);
-        RabbitMQ::publish('invoices_exchange', 'invoice.create', 'invoices', $this->constructRabbitMQData($service, $invoice));
+        $rabbitMQData = $this->constructRabbitMQData($service, $invoice);
+        RabbitMQ::publish('invoices_exchange', 'invoice.create', 'invoices', $rabbitMQData);
+        $this->invoiceHistoryRepository->insert($invoice->id, Invoice::SEARCH, "create", json_encode($rabbitMQData));
         return $invoice;
     }
 
@@ -70,7 +77,7 @@ class InvoiceService
 
         $class = "App\\Services\\Methods\\{$this->invoice->name}Excahanger";
         if (class_exists($class) && in_array(PaymentMethodContract::class, class_implements($class))) {
-            $method = new $class();
+            $method = app($class);
             $method->cancel($this->invoice, $status);
         } else {
             DB::beginTransaction();
@@ -94,8 +101,9 @@ class InvoiceService
 
     public function updateStatus(string $status): self
     {
-        Invoice::query()->where('id', $this->invoice->id)->update(['status' => $status]);
-
+        $invoice = Invoice::query()->where('id', $this->invoice->id)->first();
+        $invoice->update(['status' => $status]);
+        $this->invoiceHistoryRepository->insert($invoice->id, $status, "api", userId: auth()?->user()?->id ?? null);
         return $this;
     }
 

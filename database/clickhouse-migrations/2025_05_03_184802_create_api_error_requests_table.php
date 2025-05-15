@@ -10,7 +10,7 @@ return new class extends AbstractClickhouseMigration
     {
         $this->clickhouseClient->write(
             <<<SQL
-            CREATE TABLE api_error_requests (
+            CREATE TABLE IF NOT EXISTS api_error_requests (
                 invoice_id UInt64,
                 exchanger_id UInt32,
                 error_message String,

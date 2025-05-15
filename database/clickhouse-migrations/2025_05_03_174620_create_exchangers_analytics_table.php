@@ -9,7 +9,7 @@ return new class extends AbstractClickhouseMigration {
     {
         $this->clickhouseClient->write(
             <<<SQL
-            CREATE TABLE exchangers_analytics (
+            CREATE TABLE IF NOT EXISTS exchangers_analytics (
                 invoice_id UInt64,
                 exchanger_id UInt64,
                 status String,
