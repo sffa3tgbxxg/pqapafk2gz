@@ -36,7 +36,7 @@ trait ClickhouseMigrations
         $mysqlPASSWORD = config('database.connections.mysql.password');
 
         return sprintf(
-            "MySQL('%s:%d', '%s', '%s', '%s', '%s')",
+            "'%s:%d', '%s', '%s', '%s', '%s'",
             $mysqlHOST,
             $mysqlPORT,
             $mysqlDATABASE,
