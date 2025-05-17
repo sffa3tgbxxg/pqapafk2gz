@@ -28,7 +28,7 @@ return new class extends AbstractClickhouseMigration
                 created_at Nullable(DateTime)
                 ) 
                 ENGINE = ReplacingMergeTree(updated_at)
-                PRIMARY KEY (invoice_id)
+                PRIMARY KEY (id)
             SQL
         );
     }
