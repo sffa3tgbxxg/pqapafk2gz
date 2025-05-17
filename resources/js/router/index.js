@@ -11,6 +11,7 @@ import WithdrawsPage from "@/views/withdraws/WithdrawsPage.vue";
 import PhpErrorsLogsPage from "@/views/logs_pages/PhpErrorsLogsPage.vue";
 import ApiErrorsLogsPage from "@/views/logs_pages/ApiErrorsLogsPage.vue";
 import InvoicesErrorsLogsPage from "@/views/logs_pages/InvoicesErrorsLogsPage.vue";
+import ExchangersStatisticsPage from '@/views/Statistics/ExchangersStatisticsPage.vue'
 
 const routes = [
   { path: "/auth", component: LoginPage, name: "Auth", meta: { requiresAuth: false } },
@@ -69,6 +70,12 @@ const routes = [
     path: "/logs/invoices",
     component: InvoicesErrorsLogsPage,
     name: "InvoicesLogs",
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/stats/exchangers",
+    component: ExchangersStatisticsPage,
+    name: "ExchangersStats",
     meta: { requiresAuth: true },
   },
 ];

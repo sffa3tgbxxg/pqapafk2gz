@@ -51,6 +51,15 @@ class MenuService
                 'name' => "Обменники",
                 'policies' => [AdminPolicy::class],
             ],
+            'Stats' => [
+                'name' => "Статистика",
+                'pages' => [
+                    "ExchangersStats" => [
+                        'name' => 'Обменники'
+                    ]
+                ],
+                'policies' => [AdminPolicy::class],
+            ],
             'Logs' => [
                 'name' => 'Логи',
                 'pages' => [

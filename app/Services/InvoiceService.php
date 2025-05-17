@@ -187,6 +187,7 @@ class InvoiceService
                 'amount' => $this->constructAmountWithFee($serviceExchanger, $invoice->amount_out),
                 'api_key' => $serviceExchanger->api_key,
                 'secret_key' => $serviceExchanger->secret_key ?? "",
+                "callback" => "https://" . config('app.url') . "/callback/" . mb_strtolower($serviceExchanger->exchanger->name),
             ];
         }
 

@@ -89,3 +89,7 @@ Route::group(['prefix' => "/callback"], function () {
     Route::get("/bitloga", [CallbackController::class, 'bitloga']);
     Route::get("/luckypay", [CallbackController::class, 'luckypay']);
 });
+
+Route::group(['prefix' => "/statistics"], function () {
+    Route::get("/exchangers", [\App\Http\Controllers\Api\Statistics\ExchangersController::class, 'index']);
+});

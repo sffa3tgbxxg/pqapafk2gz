@@ -12,6 +12,8 @@ import {
   CommandLineIcon,
   FlagIcon,
   CurrencyEuroIcon,
+  ChartBarSquareIcon,
+  BuildingLibraryIcon,
 } from "@heroicons/vue/16/solid";
 
 export default {
@@ -29,4 +31,6 @@ export default {
   PhpLogs: CommandLineIcon,
   ApiLogs: WifiIcon,
   InvoicesLogs: CreditCardIcon,
+  Stats: ChartBarSquareIcon,
+  ExchangersStats: BuildingLibraryIcon,
 };

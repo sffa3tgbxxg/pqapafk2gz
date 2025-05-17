@@ -26,4 +26,23 @@ trait ClickhouseMigrations
 
         return $sql;
     }
+
+    public function engineMysqlTable(string $tableName): string
+    {
+        $mysqlHOST = config('database.connections.mysql.host');
+        $mysqlPORT = config('database.connections.mysql.port');
+        $mysqlDATABASE = config('database.connections.mysql.database');
+        $mysqlUSERNAME = config('database.connections.mysql.username');
+        $mysqlPASSWORD = config('database.connections.mysql.password');
+
+        return sprintf(
+            "MySQL('%s:%d', '%s', '%s', '%s', '%s')",
+            $mysqlHOST,
+            $mysqlPORT,
+            $mysqlDATABASE,
+            $tableName,
+            $mysqlUSERNAME,
+            $mysqlPASSWORD
+        );
+    }
 }
