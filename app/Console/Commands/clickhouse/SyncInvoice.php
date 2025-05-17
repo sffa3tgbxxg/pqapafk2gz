@@ -31,6 +31,6 @@ class SyncInvoice extends Command
     public function handle()
     {
         app(ClickhouseClient::class)->client->wrte('INSERT INTO invoices_dump SELECT * FROM invoices_mysql WHERE updated_at > (SELECT max(updated_at) FROM invoices_dump)');
-        $this->info('Invoices synced successfully.');
+        Log::info("таблица click invoices_dump заполнена");
     }
 }
