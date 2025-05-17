@@ -24,7 +24,7 @@ return new class extends AbstractClickhouseMigration
                 requisites Nullable(String),
                 details Nullable(String),
                 expiry_at Nullable(DateTime),
-                updated_at Nullable(DateTime),
+                updated_at DateTime,
                 created_at Nullable(DateTime)
                 ) 
                 ENGINE = ReplacingMergeTree(updated_at)
